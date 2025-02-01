@@ -1,0 +1,22 @@
+create table users(
+	id integer primary key,
+	username varchar(20) unique not null,
+	nombre varchar(20) not null,
+	apellidos varchar(40) not null,
+	fecha_nac date not null,
+	pwd varchar(65) not null,
+	pwd_antiguo varchar(65) default null
+);
+
+create sequence users_id_seq start with 1 increment by 1;
+alter table alter column id set default users_id_seq;
+
+drop table users;
+
+insert into users values (1,'Miguel','González Pampliega','12-09-2004', '7b1b579700cd7a5fa08e56b38306c57b2680c831943877c2e0af883dae9a53a5', null);
+insert into users values (2,'Diego','Arbeloa Pérez','08-06-2001', '5819b005d5c142ae151889bcbe0872bbbdbeecc26c4785a48e65b04abd7a6926', null);
+insert into users values (3,'Guillermo','Arce Gómez','28-12-2004', '6be3c7c19fecb2e3a0b0c5e0698a0c51e01b8916fef544e3aa0920651e61fa7a', null);
+commit;
+
+
+select * from users;

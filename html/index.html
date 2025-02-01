@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <label id="message" style="display: block;"></label>
+        <form id="userForm">
+            <label for="username">Nombre de usuario</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required>
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" required>
+            <label for="surnames">Apellidos</label>
+            <input type="text" id="surnames" name="surnames" required>
+            <label for="date">Fecha de nacimiento</label>
+            <input type="text" id="date" name="date" placeholder="DD-MM-YYYY" required>
+            <button type="submit">ENVIAR</button>
+
+
+        </form>
+        <label id="message_login"></label>
+        <form id="login">
+                <label for="username-login">Nombre de usuario</label>
+                <input type="text" id="username-login" name="username-login" required>
+                <label for="password-login">Contraseña</label>
+                <input type="password" id="password-login" name="password-login" required>
+                <button type="submit">ENVIAR</button>
+        </form>
+        <script>
+            document.getElementById("login").addEventListener("submit", function(event){
+                event.preventDefault();
+
+                const formData = {
+                    username: document.getElementById("username-login").value,
+                    pwd: document.getElementById("password-login").value
+                };
+
+                fetch("http://192.168.1.80:8080/api/v1/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error("Error en el inicio de sesión");
+                })
+                .then(data => {
+                    document.getElementById("message_login").textContent = "Inicio de sesión con éxito!";
+                })
+                .catch(error => {
+                    document.getElementById("message_login").textContent = "Hubo un error en el inicio de sesión.";
+                });
+            });
+        </script>
+        <script>
+            document.getElementById("userForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Evita que el formulario redirija la página
+        
+                const formData = {
+                    username: document.getElementById("username").value,
+                    pwd: document.getElementById("password").value,
+                    name: document.getElementById("name").value,
+                    surnames: document.getElementById("surnames").value,
+                    birth_date: document.getElementById("date").value
+                };
+        
+                fetch("http://192.168.1.80:8080/api/v1/user", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error("Error en el registro");
+                })
+                .then(data => {
+                    document.getElementById("message").textContent = "Usuario registrado con éxito!";
+                })
+                .catch(error => {
+                    document.getElementById("message").textContent = "Hubo un error en el registro.";
+                });
+            });
+        </script>
+
+        <style>
+            label, input, button {
+                display: block; /* Hace que cada elemento ocupe toda la línea */
+                margin-bottom: 10px; /* Espacio entre elementos */
+            }
+        </style>
+
+    </body>
+
+</html>

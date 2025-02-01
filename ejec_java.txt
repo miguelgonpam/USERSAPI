@@ -1,0 +1,1 @@
+/usr/bin/env /usr/lib/jvm/jdk-21.0.6/bin/java @/tmp/cp_9lrlms0tuzjl3t5zdgx7a1w7u.argfile com.usersapi.usersapi.ApiUsersApplication
